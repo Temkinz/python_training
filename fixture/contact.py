@@ -80,3 +80,33 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # click submit button
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.app.open_main_page()
+        # choose the first contact
+        wd.find_element_by_name("selected[]").click()
+        # click delete button
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # accept alert
+        wd.switch_to_alert().accept()
+
+    def edit_first_contact(self, edited_name):
+        wd = self.app.wd
+        self.app.open_main_page()
+        # choose the first contact
+        wd.find_element_by_name("selected[]").click()
+        # click update button
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        # edit first name
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys(edited_name)
+        # click submit button
+        wd.find_element_by_name("update").click()
+        # return to main page
+        self.return_to_main_page()
+
+    def return_to_main_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home page").click()
