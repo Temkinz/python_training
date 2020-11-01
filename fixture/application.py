@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from fixture.session import SessionHelper
 
 
 class Application:
@@ -9,20 +10,11 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
-    def login(self, username, password):
+    def open_main_page(self):
         wd = self.wd
-        # open main page
         wd.get("https://localhost/addressbook/")
-        # fill the form
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        # click login button
-        wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def go_to_home_page(self):
         wd = self.wd
@@ -122,9 +114,6 @@ class Application:
         wd = self.wd
         wd.quit()
 
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
 
     def create_group(self, group):
         wd = self.wd
