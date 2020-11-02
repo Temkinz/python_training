@@ -10,6 +10,12 @@ class ContactHelper:
         # open contacts page
         wd.find_element_by_link_text("add new").click()
         # fill the form
+        self.fill_form(contact)
+        # click submit button
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def fill_form(self, contact):
+        wd = self.app.wd
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.first_name)
@@ -25,7 +31,6 @@ class ContactHelper:
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
         wd.find_element_by_name("title").send_keys(contact.title)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(contact.company)
@@ -44,7 +49,6 @@ class ContactHelper:
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("fax").clear()
         wd.find_element_by_name("fax").send_keys(contact.fax)
-        wd.find_element_by_name("theform").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
@@ -78,8 +82,6 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
-        # click submit button
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -91,17 +93,15 @@ class ContactHelper:
         # accept alert
         wd.switch_to_alert().accept()
 
-    def edit_first_contact(self, edited_name):
+    def edit_first_contact(self, contact):
         wd = self.app.wd
         self.app.open_main_page()
         # choose the first contact
         wd.find_element_by_name("selected[]").click()
         # click update button
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        # edit first name
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(edited_name)
+        # edit the form
+        self.fill_form(contact)
         # click submit button
         wd.find_element_by_name("update").click()
         # return to main page
