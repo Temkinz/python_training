@@ -8,18 +8,19 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
     def open_main_page(self):
         wd = self.wd
-        wd.get("https://localhost/addressbook/")
+        if not wd.current_url.endswith("/addressbook/"):
+            wd.get("https://localhost/addressbook/")
 
     def go_to_home_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("home").click()
+        if not wd.current_url.endswith("/addressbook/"):
+            wd.find_element_by_link_text("home").click()
 
     def quit(self):
         wd = self.wd
