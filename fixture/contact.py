@@ -13,6 +13,7 @@ class ContactHelper:
         self.fill_form(contact)
         # click submit button
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.app.go_to_home_page()
 
     def fill_form(self, contact):
         wd = self.app.wd
