@@ -55,10 +55,12 @@ class ContactHelper:
         wd.find_element_by_xpath(locator).click()
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_main_page()
-        # choose the first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # click delete button
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # accept alert
@@ -67,11 +69,17 @@ class ContactHelper:
         self.app.open_main_page()
         self.contact_cache = None
 
-    def edit_first_contact(self, contact):
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def modify_first_contact(self, contact):
+        self.modify_contact_by_index(0, contact)
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.app.open_main_page()
-        # choose the first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # click update button
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # edit the form

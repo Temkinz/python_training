@@ -1,5 +1,6 @@
 from model.group import Group
 
+
 class GroupHelper:
     def __init__(self, app):
         self.app = app
@@ -29,19 +30,25 @@ class GroupHelper:
             wd.find_element_by_link_text("group page").click()
 
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_group_page()
-        # choose the first group
-        self.select_first_group()
+        self.select_group_by_index(index)
         # click delete button
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
         self.group_cache = None
 
-    def modify_first_group(self, new_group_data):
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def modify_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_group_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # click edit button
         wd.find_element_by_name("edit").click()
         # fill the form
@@ -51,9 +58,8 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
-    def select_first_group(self):
-        wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+    def modify_first_group(self):
+        self.modify_group_by_index(0)
 
     def fill_form(self, group):
         self.change_field_value("group_name", group.name)
@@ -84,8 +90,3 @@ class GroupHelper:
                 group_id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, group_id=group_id))
         return list(self.group_cache)
-
-
-
-
-
