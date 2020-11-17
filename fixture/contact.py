@@ -73,21 +73,24 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_edit_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
     def modify_first_contact(self, contact):
         self.modify_contact_by_index(0, contact)
 
     def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.app.open_main_page()
-        self.select_contact_by_index(index)
-        # click update button
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.select_edit_contact_by_index(index)
         # edit the form
         self.fill_form(contact)
         # click submit button
         wd.find_element_by_name("update").click()
         # return to main page
         self.return_to_main_page()
+        wd.current_url.endswith("/addressbook/")
         self.contact_cache = None
 
     def return_to_main_page(self):
@@ -103,8 +106,8 @@ class ContactHelper:
     contact_cache = None
 
     def get_contact_list(self):
-        wd = self.app.wd
         if self.contact_cache is None:
+            wd = self.app.wd
             self.app.open_main_page()
             self.contact_cache = []
             for element in wd.find_elements_by_name("entry"):
