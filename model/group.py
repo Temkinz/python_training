@@ -1,5 +1,6 @@
 from sys import maxsize
 
+
 class Group():
     def __init__(self, name=None, header=None, footer=None, group_id=None):
         self.name = name
@@ -8,10 +9,10 @@ class Group():
         self.group_id = group_id
 
     def __repr__(self):
-        return "%s:%s" % (self.group_id, self.name)
+        return "%s:%s:%s:%s" % (self.group_id, self.name, self.header, self.footer)
 
     def __eq__(self, other):
-        return (self.group_id is None or other.group_id is None or self.group_id == other.group_id)\
+        return (self.group_id is None or other.group_id is None or self.group_id == other.group_id) \
                and self.name == other.name
 
     def group_id_or_max(self):
