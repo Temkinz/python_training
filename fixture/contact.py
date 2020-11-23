@@ -32,11 +32,11 @@ class ContactHelper:
         self.change_field_value("fax", contact.fax)
         self.change_field_value("email", contact.email)
         self.change_field_value("homepage", contact.home_page)
-        self.choose_option("bday", contact.bday, "//option[@value='1']")
-        self.choose_option("bmonth", contact.bmonth, "//option[@value='August']")
+        self.choose_option("bday", contact.bday)
+        self.choose_option("bmonth", contact.bmonth)
         self.change_field_value("byear", contact.byear)
-        self.choose_option("aday", contact.aday, "(//option[@value='1'])[2]")
-        self.choose_option("amonth", contact.amonth, "(//option[@value='February'])[2]")
+        self.choose_option("aday", contact.aday)
+        self.choose_option("amonth", contact.amonth)
         self.change_field_value("ayear", contact.ayear)
         self.change_field_value("address2", contact.address2)
         self.change_field_value("phone2", contact.secondary_phone)
@@ -49,11 +49,10 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def choose_option(self, field_name, option, locator):
+    def choose_option(self, field_name, value):
         wd = self.app.wd
         wd.find_element_by_name(field_name).click()
-        Select(wd.find_element_by_name(field_name)).select_by_visible_text(option)
-        wd.find_element_by_xpath(locator).click()
+        Select(wd.find_element_by_name(field_name)).select_by_value(value)
 
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
