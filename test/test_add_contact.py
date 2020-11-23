@@ -32,7 +32,6 @@ def random_email(maxlen):
 def random_month():
     months = ["September", "October", "November", "May", "June"]
     month = random.choice(months)
-    print(month)
     return month
 
 
