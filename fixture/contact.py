@@ -36,7 +36,7 @@ class ContactHelper:
         self.choose_option("bmonth", contact.bmonth)
         self.change_field_value("byear", contact.byear)
         self.choose_option("aday", contact.aday)
-        self.choose_option("amonth", contact.amonth)
+        self.choose_option("amonth", contact.amonth.lower())
         self.change_field_value("ayear", contact.ayear)
         self.change_field_value("address2", contact.address2)
         self.change_field_value("phone2", contact.secondary_phone)
