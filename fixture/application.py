@@ -35,7 +35,7 @@ class Application:
         wd = self.wd
         wd.quit()
 
-    def is_valid(self):
+    def is_not_valid(self):
         try:
             self.wd.current_url()
             return True
