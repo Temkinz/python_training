@@ -1,4 +1,6 @@
 from model.group import Group
+from random import randrange
+from selenium.webdriver.support.ui import Select
 
 
 class GroupHelper:
@@ -117,3 +119,12 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
+
+    def choose_group_for_contact(self, id_group):
+        wd = self.app.wd
+        wd.find_element_by_name("to_group").click()
+        index = randrange(len(wd.find_elements_by_xpath("//select[@name='to_group']/option")))
+        Select(wd.find_element_by_name("to_group")).select_by_value(id_group)
+        wd.find_element_by_xpath("//select[@name='to_group']/option[%s]" % index).click()
+        wd.find_element_by_name("add").click()
+

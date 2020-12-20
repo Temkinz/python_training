@@ -83,7 +83,9 @@ class ContactHelper:
 
     def select_contact_by_id(self, contact_id):
         wd = self.app.wd
-        wd.find_element_by_css_selector("input[value='%s']" % contact_id).click()
+        contact = wd.find_element_by_css_selector("input[value='%s']" % contact_id).click()
+        contact_id = contact.get_attribute("value")
+        return contact_id
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
@@ -191,3 +193,21 @@ class ContactHelper:
                                 map(lambda x: self.clear(x),
                                     filter(lambda x: x is not None,
                                            [contact.email, contact.email2, contact.email3]))))
+
+    def add_contact_to_group(self, id, group_id):
+        wd = self.app.wd
+        self.app.open_main_page()
+        wd.find_element_by_xpath('//input[@id="%s"]' % id).click()
+        wd.find_element_by_xpath('//select[@name = "to_group"]').click()
+        wd.find_elements_by_css_selector('select[name="to_group"] > option[value="%s"]' % group_id)[0].click()
+        wd.find_element_by_xpath('//input[@name="add"]').click()
+        self.contact_cache = None
+
+    def delete_contact_from_group(self, id, group_id):
+        wd = self.app.wd
+        self.app.open_main_page()
+        wd.find_element_by_xpath('//select[@name="group"]').click()
+        wd.find_element_by_xpath('//option[@value="%s"]' % group_id).click()
+        wd.find_element_by_xpath('//input[@id="%s"]' % id).click()
+        wd.find_element_by_xpath('//input[@name="remove"]').click()
+        self.contact_cache = None
